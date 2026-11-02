@@ -19,7 +19,10 @@
 const DATA=JSON.parse(document.getElementById('menu-data').textContent);
 const WEEKS=[2,9,16,23,30],DAY_NAMES=['월','화','수','목','금'],MEALS=['조식','중식','석식'];
 const $=id=>document.getElementById(id);
-const koreaNow=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+// 수정 후 코드
+const now = new Date();
+const kstDate = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+const koreaNow = kstDate.toISOString().slice(0, 10);
 const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function dateFor(w,j){const d=new Date(Date.UTC(2026,10,WEEKS[w]+j));return {key:d.toISOString().slice(0,10),month:d.getUTCMonth()+1,date:d.getUTCDate()};}
 function locate(key){for(let w=0;w<5;w++)for(let j=0;j<5;j++)if(dateFor(w,j).key===key)return [w,j];return null;}
